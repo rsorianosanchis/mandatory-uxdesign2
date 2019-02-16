@@ -3,11 +3,11 @@
 // uppgifterna från API
 // https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple
 // detalierad options for quiz-request
-let amountInput; // förbered för om usr kontrollera antal av frågor
+let amountInput = 25; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
-let categoryId; // siffran
+let categoryId = 10; // siffran
 let category;
-let difficultyId; // 'easy' || 'medium' || 'hard'
+let difficultyId;// 'easy' || 'medium' || 'hard'
 let difficulty;
 let typeId; // 'multiple' || 'boolean'
 let type;
@@ -66,7 +66,7 @@ function getTokenId (dataIn){
 //
 function controlUrlApiReq () {
  //debugger;
- if(!!amount === false){
+ if(!!amountInput === false){
   amount = 10// body... 
  }else{
    amount = amountInput;
@@ -84,18 +84,13 @@ function controlUrlApiReq () {
    difficulty = `&difficulty=${difficultyId}`;
  };
  //
- if (!!difficultyId === false) {
-  difficulty ='';
- }else{
-   difficulty = difficultyId;
- };
  if (!!typeId === false) {
   type ='';
  }else{
    type = `&type=${typeId}`;
  };
  //
- urlRequest = `https://opentdb.com/api.php?amount=${amount}${category}${category}${category}${token}`;
+ urlRequest = `https://opentdb.com/api.php?amount=${amount}${category}${difficulty}${type}${token}`;
  console.log(urlRequest);
 };
 
