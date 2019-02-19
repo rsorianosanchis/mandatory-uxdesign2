@@ -1,5 +1,13 @@
 'use strict';
 //
+let vBody = document.body;
+let vHeader = document.createElement('div');
+vHeader.className = ('header');
+let vMain = document.createElement('div');
+vMain.className = ('main');
+vBody.appendChild(vHeader);
+vBody.appendChild(vMain);
+
 // url Request variables settings
 let amountInput = 3; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
@@ -80,24 +88,25 @@ function renderQuiz (dataIn){
  let data = JSON.parse(dataIn);
  console.log(data);
  let numQuestion = 1;
- let numAnswer = 1;
+ 
  let score = 0;
  //let correctAnswer = [];
  //console.log(`API server have returned code ${data.response_code}`);
  serverResponseCodes(data.response_code);
- let vBody = document.body;
- let vForm = document.createElement('div');
- vForm.className = 'mdc-form-field';
- vBody.appendChild(vForm);
+ 
  //
  //
  for (let i of data.results) {
+  //
+  let vForm = document.createElement('div');
+  vForm.className = 'mdc-form-field';
+  vMain.appendChild(vForm);
   console.log(i.question);
   let vP = document.createElement('p');
   vP.setAttribute('id',`question${numQuestion}`);
-  
   vP.innerHTML = i.question;
   vForm.appendChild(vP);
+  let numAnswer = 1;
   //vi ska läga till alla optioner på en array, senare man ska använda arrayen för undvika att korrekta svar ska ligga på samman plats.
   let answersArr = [];
   answersArr.push(i.correct_answer);
@@ -117,7 +126,7 @@ function renderQuiz (dataIn){
    vInput.setAttribute('type','radio');
    vInput.setAttribute('id', `answer${numQuestion}-${numAnswer}`);
    vInput.setAttribute('name', `radio${numQuestion}`);
-   vInput.setAttribute('value', `${answ}`)
+   vInput.setAttribute('value', answ);
    let vDivRadioBak = document.createElement('div');
    vDivRadioBak.className = 'mdc-radio__background';
    let vDivRadioOuter = document.createElement('div');
@@ -126,18 +135,18 @@ function renderQuiz (dataIn){
    vDivRadioInner.className = 'mdc-radio__inner-circle';
    let vLabel = document.createElement('label');
    vLabel.setAttribute('for',`answer${numQuestion}-${numAnswer}`);
+   vLabel.innerHTML = answ;
    vForm.appendChild(vMdcRadio);
    vMdcRadio.appendChild(vInput);
    vMdcRadio.appendChild(vDivRadioBak);
    vDivRadioBak.appendChild(vDivRadioOuter);
    vDivRadioBak.appendChild(vDivRadioInner);
+   vForm.appendChild(vLabel);
    numAnswer++;
-
-
-
   };
   numQuestion++;
  };
+ vMain.appendChild(checkButton);
 };
 
 
@@ -190,12 +199,12 @@ function shuffle(array) {
  */
 
 //
-let bot = document.querySelector('button');
-bot.addEventListener('click', ()=>{
+let checkButton = document.querySelector('button');
+checkButton.addEventListener('click', ()=>{
  let respuestas = document.querySelectorAll("input");
  console.log(respuestas);
-
 });
+
 // Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
 ajaxGet(urlToken,getTokenId,false);
 //

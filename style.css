@@ -1,8 +1,31 @@
-.mdc-form-field{
+
+.main{
  display: flex;
  flex-direction: column;
- justify-content: flex-start;
+}
+
+.mdc-form-field{
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+
+ 
+
+}
+p{
+ flex-basis: 100%;
+
 }
 .mdc-radio{
+ flex-grow: 0;
  
+ 
+
+
+}
+label{
+ flex-basis: 90%;
+ 
+
+
 }
