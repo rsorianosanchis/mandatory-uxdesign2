@@ -10,9 +10,9 @@ vBody.appendChild(vMain);
 let checkButton = document.createElement('button');
 let correctAnswer = [];
 let checkedAnswer = [];
-
+let score = 0;
 // url Request variables settings
-let amountInput = 3; // förbered för om usr kontrollera antal av frågor
+let amountInput = 10; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -29,7 +29,6 @@ let urlResetSession = `https://opentdb.com/api_token.php?command=reset${token}`;
 // main url request questions variable
 let urlRequest;
 //
-/***************************************************************************************************************************************/
 //
 function ajaxGet (url,myFunction,asyncBool){
  console.log(url);
@@ -85,18 +84,16 @@ function setupUrlApiReqQuiz () {
  urlRequest = `https://opentdb.com/api.php?amount=${amount}${category}${difficulty}${type}${token}`;
  console.log(urlRequest);
 };
-
+//
 function renderQuiz (dataIn){
  console.log(dataIn);
  let data = JSON.parse(dataIn);
  console.log(data);
  let numQuestion = 1;
- 
  let score = 0;
- //let correctAnswer = [];
+ //
  //console.log(`API server have returned code ${data.response_code}`);
  serverResponseCodes(data.response_code);
- 
  //
  //
  for (let i of data.results) {
@@ -112,10 +109,8 @@ function renderQuiz (dataIn){
   let numAnswer = 1;
   //vi ska läga till alla optioner på en array, senare man ska använda arrayen för undvika att korrekta svar ska ligga på samman plats.
   let answersArr = [];
-
   answersArr.push(i.correct_answer); // för att rendera
   correctAnswer.push(i.correct_answer); // för kontrollera resultatet
-
   for (let j of i.incorrect_answers) {
    answersArr.push(j);
   };
@@ -155,8 +150,8 @@ function renderQuiz (dataIn){
  createSubmitButton();
  vMain.appendChild(checkButton);
 };
-
-
+//
+//
 function serverResponseCodes (code){
  switch (code) {
   case 1:
@@ -176,62 +171,72 @@ function serverResponseCodes (code){
    break;
  }
 };
-
+//
+//
 function shuffle(array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
-
   // Om det finns elemet att blanda..
   while (0 !== currentIndex) {
-
     // Seleccionar un elemento sin mezclar...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
     // E intercambiarlo con el elemento actual
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
-}
-
+};
+//
 //
 function createSubmitButton () {
  checkButton.setAttribute('id','checkButton');
  checkButton.innerHTML = 'Submit Answers';
  checkButton.addEventListener('click', ()=>{
   getAnswers();
-  
-
+  controlResultat(correctAnswer,checkedAnswer);
  });
 };
 //
 function getAnswers (){
   let vAllInputNode = document.querySelectorAll("input");
   let inputArr = Array.from(vAllInputNode);
+  checkedAnswer = [];
+
   //controlar si el numero de checked es igual al amount de questions
   for (let i  of inputArr) {
    console.log("aaaa");
    if(i.checked === true){
     console.log(i.value);
+    checkedAnswer.push(i.value);
+
    }else{
-
+    continue;
    }
-
-   // statement
-  }
- // body... 
+  };
 };
-
-
-
+//
+//
 function controlResultat (correctAnswer,checkedAnswer) {
-
-
+ console.log(checkedAnswer);
+ console.log(correctAnswer);
+ if(correctAnswer.length === checkedAnswer.length){
+  for(let i = 0 ; i < checkedAnswer.length; i++){
+   console.log(checkedAnswer[i]);
+   console.log(correctAnswer[i]);
+   if(checkedAnswer[i] === correctAnswer[i] ){
+    score++;
+   }else{
+    continue;
+   }
+  };
+ }else{
+  alert('chek att all frågor har ensvar och trycka submit igen');
+ };
+ console.log(`du har fåt ${score} bra svar`);
+ score = 0;
 };
-
-
+//
 // Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
 ajaxGet(urlToken,getTokenId,false);
 //
@@ -242,4 +247,6 @@ console.log(token);
 //
 // View Questions
 ajaxGet(urlRequest,renderQuiz,true);
+
+
 //
