@@ -7,6 +7,9 @@ let vMain = document.createElement('div');
 vMain.className = ('main');
 vBody.appendChild(vHeader);
 vBody.appendChild(vMain);
+let checkButton = document.createElement('button');
+let correctAnswer = [];
+let checkedAnswer = [];
 
 // url Request variables settings
 let amountInput = 3; // förbered för om usr kontrollera antal av frågor
@@ -109,7 +112,10 @@ function renderQuiz (dataIn){
   let numAnswer = 1;
   //vi ska läga till alla optioner på en array, senare man ska använda arrayen för undvika att korrekta svar ska ligga på samman plats.
   let answersArr = [];
-  answersArr.push(i.correct_answer);
+
+  answersArr.push(i.correct_answer); // för att rendera
+  correctAnswer.push(i.correct_answer); // för kontrollera resultatet
+
   for (let j of i.incorrect_answers) {
    answersArr.push(j);
   };
@@ -146,6 +152,7 @@ function renderQuiz (dataIn){
   };
   numQuestion++;
  };
+ createSubmitButton();
  vMain.appendChild(checkButton);
 };
 
@@ -189,21 +196,41 @@ function shuffle(array) {
   return array;
 }
 
- /*
- data.forEach( function(element, index) {
-  let vLi = document.createElement('li');
-  vLi.textContent = element.name;
-  vUl.appendChild(vLi);
-  console.log(element);
- });
- */
-
 //
-let checkButton = document.querySelector('button');
-checkButton.addEventListener('click', ()=>{
- let respuestas = document.querySelectorAll("input");
- console.log(respuestas);
-});
+function createSubmitButton () {
+ checkButton.setAttribute('id','checkButton');
+ checkButton.innerHTML = 'Submit Answers';
+ checkButton.addEventListener('click', ()=>{
+  getAnswers();
+  
+
+ });
+};
+//
+function getAnswers (){
+  let vAllInputNode = document.querySelectorAll("input");
+  let inputArr = Array.from(vAllInputNode);
+  //controlar si el numero de checked es igual al amount de questions
+  for (let i  of inputArr) {
+   console.log("aaaa");
+   if(i.checked === true){
+    console.log(i.value);
+   }else{
+
+   }
+
+   // statement
+  }
+ // body... 
+};
+
+
+
+function controlResultat (correctAnswer,checkedAnswer) {
+
+
+};
+
 
 // Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
 ajaxGet(urlToken,getTokenId,false);
