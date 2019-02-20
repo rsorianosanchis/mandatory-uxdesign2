@@ -35,21 +35,6 @@ let urlRequest;
 //
 //MAIN PROGRAM EXECUTION//
 createStartButton();
-/*
-// Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
-ajaxGet(urlToken,getTokenId,false);
-//
-//Controlled request with usr specifications
-setupUrlApiReqQuiz();
-//
-console.log(token);
-//
-// View Questions
-ajaxGet(urlRequest,renderQuiz,true);
-*/
-
-//
-
 
 //
 function ajaxGet (url,myFunction,asyncBool){
@@ -227,6 +212,7 @@ function createStartButton(){
   // View Questions
   ajaxGet(urlRequest,renderQuiz,true);
   //
+  
   transitionToQuiz();
  });
 };
@@ -260,6 +246,7 @@ function getAnswers (){
 };
 //
 function transitionToQuiz () {
+ setTimeout(()=>{console.log('använd för undvika ett fel');},0);
  vMain.removeChild(startButton);
 }
 
@@ -287,7 +274,7 @@ function controlResultat (correctAnswer,checkedAnswer) {
    }
   };
   console.log(`du har fåt ${score} bra svar`);
-  //aqui ira el modal dialog !!!!******************
+  //aqui ocurirrira el modal dialog !!!!******************
   transitionToStart();
  }else{
   alert('chek att all frågor har ensvar och trycka submit igen');
