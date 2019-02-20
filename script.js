@@ -17,7 +17,7 @@ let correctAnswer = [];
 let checkedAnswer = [];
 let score = 0;
 // url Request variables settings
-let amountInput = 5; // förbered för om usr kontrollera antal av frågor
+let amountInput = 2; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -236,7 +236,7 @@ function createSubmitButton(){
 function resultTest () {
   getAnswers();
   controlResultat(correctAnswer,checkedAnswer);
-  transitionToStart(); 
+  //transitionToStart(); 
 };
 //
 function getAnswers (){
@@ -293,7 +293,7 @@ function controlResultat (correctAnswer,checkedAnswer) {
   
   
   //aqui ocurirrira el modal dialog !!!!******************
-  //transitionToStart();
+  transitionToStart();
  }else{
   //debugger;
   alert('chek att all frågor har ensvar och trycka submit igen');
