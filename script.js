@@ -17,7 +17,7 @@ let correctAnswer = [];
 let checkedAnswer = [];
 let score = 0;
 // url Request variables settings
-let amountInput = 2; // förbered för om usr kontrollera antal av frågor
+let amountInput = 9; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -218,7 +218,7 @@ function mainProgram () {
   console.log(token);
   //
   // View Questions
-  ajaxGet(urlRequest,renderQuiz,false);
+  ajaxGet(urlRequest,renderQuiz,true);
   //
   
   transitionToQuiz();
@@ -289,7 +289,7 @@ function controlResultat (correctAnswer,checkedAnswer) {
     continue;
    }
   };
-  console.log(`du har fåt ${score} bra svar`);
+  console.log(`du har fåt ${score} bra svar av ${correctAnswer.length}`);
   
   
   //aqui ocurirrira el modal dialog !!!!******************
