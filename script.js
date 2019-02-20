@@ -1,6 +1,7 @@
 'use strict';
 //
 // INITIAL CONDITIONS //
+//debugger;
 let vBody = document.body;
 let vHeader = document.querySelector('header');
 vBody.appendChild(vHeader);
@@ -16,7 +17,7 @@ let correctAnswer = [];
 let checkedAnswer = [];
 let score = 0;
 // url Request variables settings
-let amountInput = 3; // förbered för om usr kontrollera antal av frågor
+let amountInput = 5; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -35,6 +36,7 @@ let urlRequest;
 //
 //MAIN PROGRAM EXECUTION//
 createStartButton();
+//transitionToStart();
 
 //
 function ajaxGet (url,myFunction,asyncBool){
@@ -98,6 +100,7 @@ function renderQuiz (dataIn){
  console.log(data);
  let numQuestion = 1;
  let score = 0;
+ correctAnswer = [];
  //
  //console.log(`API server have returned code ${data.response_code}`);
  serverResponseCodes(data.response_code);
@@ -200,7 +203,12 @@ function createStartButton(){
  startButton.setAttribute('id','startButton');
  startButton.innerHTML = 'START';
  vMain.appendChild(startButton);
- startButton.addEventListener('click', ()=>{
+ startButton.addEventListener('click',mainProgram);
+};
+
+function mainProgram () {
+  //e.stopPropagation();
+  //e.preventDefault();
   // Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
   ajaxGet(urlToken,getTokenId,false);
   //
@@ -210,21 +218,25 @@ function createStartButton(){
   console.log(token);
   //
   // View Questions
-  ajaxGet(urlRequest,renderQuiz,true);
+  ajaxGet(urlRequest,renderQuiz,false);
   //
   
   transitionToQuiz();
- });
-};
+
+  // body... 
+
+}
 //
 function createSubmitButton(){
  checkButton.setAttribute('id','checkButton');
  checkButton.innerHTML = 'Submit Answers';
- checkButton.addEventListener('click', ()=>{
+ checkButton.addEventListener('click',resultTest);
+};
+
+function resultTest () {
   getAnswers();
   controlResultat(correctAnswer,checkedAnswer);
-  //transitionToStart();
- });
+  transitionToStart(); 
 };
 //
 function getAnswers (){
@@ -246,16 +258,18 @@ function getAnswers (){
 };
 //
 function transitionToQuiz () {
- setTimeout(()=>{console.log('använd för undvika ett fel');},0);
+ startButton.removeEventListener('click',mainProgram);
  vMain.removeChild(startButton);
 }
 
 //
 function transitionToStart () {
+ checkButton.removeEventListener('click',resultTest);  
  let clsElements = document.querySelectorAll('.mdc-form-field, #checkButton');
  for (let i of clsElements){
   vMain.removeChild(i);
  };
+ //correctAnswer = [];
  createStartButton();
 };
 
@@ -263,6 +277,8 @@ function transitionToStart () {
 function controlResultat (correctAnswer,checkedAnswer) {
  console.log(checkedAnswer);
  console.log(correctAnswer);
+ score = 0;
+ //debugger;
  if(correctAnswer.length === checkedAnswer.length){
   for(let i = 0 ; i < checkedAnswer.length; i++){
    console.log(checkedAnswer[i]);
@@ -274,13 +290,17 @@ function controlResultat (correctAnswer,checkedAnswer) {
    }
   };
   console.log(`du har fåt ${score} bra svar`);
+  
+  
   //aqui ocurirrira el modal dialog !!!!******************
-  transitionToStart();
+  //transitionToStart();
  }else{
+  //debugger;
   alert('chek att all frågor har ensvar och trycka submit igen');
  };
  
- score = 0;
+ 
+ 
  //transitionToStart();
 };
 //
