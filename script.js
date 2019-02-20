@@ -1,18 +1,22 @@
 'use strict';
 //
+// INITIAL CONDITIONS //
 let vBody = document.body;
-let vHeader = document.createElement('div');
-vHeader.className = ('header');
+let vHeader = document.querySelector('header');
+vBody.appendChild(vHeader);
 let vMain = document.createElement('div');
 vMain.className = ('main');
-vBody.appendChild(vHeader);
 vBody.appendChild(vMain);
+let startButton = document.createElement('button');
+
+
 let checkButton = document.createElement('button');
+
 let correctAnswer = [];
 let checkedAnswer = [];
 let score = 0;
 // url Request variables settings
-let amountInput = 10; // förbered för om usr kontrollera antal av frågor
+let amountInput = 3; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -29,6 +33,24 @@ let urlResetSession = `https://opentdb.com/api_token.php?command=reset${token}`;
 // main url request questions variable
 let urlRequest;
 //
+//MAIN PROGRAM EXECUTION//
+createStartButton();
+/*
+// Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
+ajaxGet(urlToken,getTokenId,false);
+//
+//Controlled request with usr specifications
+setupUrlApiReqQuiz();
+//
+console.log(token);
+//
+// View Questions
+ajaxGet(urlRequest,renderQuiz,true);
+*/
+
+//
+
+
 //
 function ajaxGet (url,myFunction,asyncBool){
  console.log(url);
@@ -173,7 +195,7 @@ function serverResponseCodes (code){
 };
 //
 //
-function shuffle(array) {
+function shuffle(array){
   let currentIndex = array.length, temporaryValue, randomIndex;
   // Om det finns elemet att blanda..
   while (0 !== currentIndex) {
@@ -189,12 +211,33 @@ function shuffle(array) {
 };
 //
 //
-function createSubmitButton () {
+function createStartButton(){
+ startButton.setAttribute('id','startButton');
+ startButton.innerHTML = 'START';
+ vMain.appendChild(startButton);
+ startButton.addEventListener('click', ()=>{
+  // Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
+  ajaxGet(urlToken,getTokenId,false);
+  //
+  //Controlled request with usr specifications
+  setupUrlApiReqQuiz();
+  //
+  console.log(token);
+  //
+  // View Questions
+  ajaxGet(urlRequest,renderQuiz,true);
+  //
+  transitionToQuiz();
+ });
+};
+//
+function createSubmitButton(){
  checkButton.setAttribute('id','checkButton');
  checkButton.innerHTML = 'Submit Answers';
  checkButton.addEventListener('click', ()=>{
   getAnswers();
   controlResultat(correctAnswer,checkedAnswer);
+  //transitionToStart();
  });
 };
 //
@@ -216,6 +259,19 @@ function getAnswers (){
   };
 };
 //
+function transitionToQuiz () {
+ vMain.removeChild(startButton);
+}
+
+//
+function transitionToStart () {
+ let clsElements = document.querySelectorAll('.mdc-form-field, #checkButton');
+ for (let i of clsElements){
+  vMain.removeChild(i);
+ };
+ createStartButton();
+};
+
 //
 function controlResultat (correctAnswer,checkedAnswer) {
  console.log(checkedAnswer);
@@ -230,23 +286,15 @@ function controlResultat (correctAnswer,checkedAnswer) {
     continue;
    }
   };
+  console.log(`du har fåt ${score} bra svar`);
+  //aqui ira el modal dialog !!!!******************
+  transitionToStart();
  }else{
   alert('chek att all frågor har ensvar och trycka submit igen');
  };
- console.log(`du har fåt ${score} bra svar`);
+ 
  score = 0;
+ //transitionToStart();
 };
 //
-// Get new Session Spel 'Token' Not Assync for garantera Token innan börjar spel.
-ajaxGet(urlToken,getTokenId,false);
-//
-//Controlled request with usr specifications
-setupUrlApiReqQuiz();
-//
-console.log(token);
-//
-// View Questions
-ajaxGet(urlRequest,renderQuiz,true);
 
-
-//
