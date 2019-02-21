@@ -1,7 +1,7 @@
 *{
  box-sizing: border-box;
-
 }
+
 .main{
  width: 450px;
  display: flex;
@@ -9,44 +9,39 @@
  flex-direction: column;
  justify-content: flex-start;
  align-items: center;
- 
 }
 
 .mdc-top-app-bar{
  margin: 0;
  width: 450px;
-
 }
 
 .mdc-form-field{
  display: flex;
  flex-direction: row;
  flex-wrap: wrap;
- 
-
 }
+
 p{
  flex-basis: 100%;
  padding-top: 20px;
- 
 }
+
 .mdc-radio{
  flex-grow: 0;
- 
-
 }
+
 label{
  flex-basis: 90%;
  
 }
 #checkButton,.closeBtn,.reStartBtn{
- font-size: 17px;
+ font-size: 16px;
  color: #fff;
  background-color: #6200ee ;
- padding: 0.7em 0.7em;
- border-radius: 10px;
+ padding: 0.4em 0.4em;
+ border-radius: 5px;
 }
-
 
 #startButton{
  margin-top: 100px;
@@ -56,16 +51,16 @@ label{
  padding: 0.7em 0.7em;
  border-radius: 10px;
 }
+
 #startButton:hover,#checkButton:hover{
  background-color: #333;
  cursor: pointer;
-
 }
 
 .modal{
  display: none;
  position: fixed;
- z-index: 1;
+ z-index: 10;
  left: 0;/*allt area börjar vänster up kanten*/
  top: 0;
  height: 100%;
@@ -79,13 +74,17 @@ label{
  margin: 20% auto;
  border-radius: 4px;
  padding: 20px;
- width: 50%;
+ width: 30%;
  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.2);
-
 }
 
 .closeBtn:hover,.reStartBtn:hover{
  color: #000;
  text-decoration: none;
  cursor: pointer;
+}
+
+.pModal{
+ font-family:sans-serif;
+ font-size: 17px;
 }
