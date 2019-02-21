@@ -34,6 +34,9 @@ let urlRequest;
 // Modal variables;
 let vModal = document.querySelector('#simpleModal');
 let vCloseBtn = document.querySelector('.closeBtn');
+let vReStartBtn = document.querySelector('.reStartBtn');
+vCloseBtn.addEventListener('click',transitionToStart);
+vReStartBtn.addEventListener('click',transitionToQuiz);
 // och Submit knappen for aktivera modal
 //MAIN PROGRAM EXECUTION//
 createStartButton();
@@ -102,6 +105,15 @@ function renderQuiz (dataIn){
  let numQuestion = 1;
  let score = 0;
  correctAnswer = [];
+ //
+ if (document.getElementById('startButton')){
+  startButton.removeEventListener('click',mainProgram);
+  vMain.removeChild(startButton);
+ }else{
+    console.log('kommer vi från modal dialog');
+ }
+ //startButton.removeEventListener('click',mainProgram);
+ //vMain.removeChild(startButton);
  //
  //console.log(`API server have returned code ${data.response_code}`);
  serverResponseCodes(data.response_code);
@@ -222,12 +234,15 @@ function mainProgram () {
   ajaxGet(urlRequest,renderQuiz,true);
   //
   
-  transitionToQuiz();
+  
+
+  //transitionToQuiz();
 
   // body... 
 
 }
 //
+
 function createSubmitButton(){
  checkButton.setAttribute('id','checkButton');
  checkButton.innerHTML = 'Submit Answers';
@@ -259,18 +274,29 @@ function getAnswers (){
 };
 //
 function transitionToQuiz () {
- startButton.removeEventListener('click',mainProgram);
- vMain.removeChild(startButton);
-}
+  //startButton.removeEventListener('click',mainProgram);
+  //vMain.removeChild(startButton);
 
+  closeModal();
+  clearQuiz();
+  mainProgram();
+
+}
 //
-function transitionToStart () {
- checkButton.removeEventListener('click',resultTest);  
- let clsElements = document.querySelectorAll('.mdc-form-field, #checkButton');
- for (let i of clsElements){
+function clearQuiz () {
+  let clsElements = document.querySelectorAll('.mdc-form-field, #checkButton');
+  for (let i of clsElements){
   vMain.removeChild(i);
  };
+
+  // body... 
+}
+//
+function transitionToStart () {
+ checkButton.removeEventListener('click',resultTest); 
+ clearQuiz(); 
  //correctAnswer = [];
+ closeModal();
  createStartButton();
 };
 
@@ -304,7 +330,13 @@ function controlResultat (correctAnswer,checkedAnswer) {
 };
 //
 function openModal () {
+
   vModal.style.display = 'block';
   
 }
 
+function closeModal () {
+  vModal.style.display = 'none';
+
+  
+}

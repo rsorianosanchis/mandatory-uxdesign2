@@ -39,23 +39,27 @@ label{
  flex-basis: 90%;
  
 }
-#checkButton{
+#checkButton,.closeBtn,.reStartBtn{
  font-size: 17px;
  color: #fff;
  background-color: #6200ee ;
  padding: 0.7em 0.7em;
  border-radius: 10px;
-
-
 }
-#checkButton:hover{
- background-color: #333;
 
-}
 
 #startButton{
- 
  margin-top: 100px;
+ font-size: 17px;
+ color: #fff;
+ background-color: #6200ee ;
+ padding: 0.7em 0.7em;
+ border-radius: 10px;
+}
+#startButton:hover,#checkButton:hover{
+ background-color: #333;
+ cursor: pointer;
+
 }
 
 .modal{
@@ -80,15 +84,8 @@ label{
 
 }
 
-.closeBtn{
- color: #ccc;
- float: right;
- font-size: 30px;
-}
-
-.closeBtn:hover{
+.closeBtn:hover,.reStartBtn:hover{
  color: #000;
  text-decoration: none;
  cursor: pointer;
-
 }
