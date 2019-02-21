@@ -5,19 +5,16 @@
 let vBody = document.body;
 let vHeader = document.querySelector('header');
 vBody.appendChild(vHeader);
-let vMain = document.createElement('div');
+let vMain = document.createElement('main');
 vMain.className = ('main');
 vBody.appendChild(vMain);
 let startButton = document.createElement('button');
-
-
 let checkButton = document.createElement('button');
-
 let correctAnswer = [];
 let checkedAnswer = [];
 let score = 0;
 // url Request variables settings
-let amountInput = 9; // förbered för om usr kontrollera antal av frågor
+let amountInput = 3; // förbered för om usr kontrollera antal av frågor
 let amount; // siffran // antal av frågor åt gången
 let categoryId; // siffran
 let category;
@@ -34,6 +31,10 @@ let urlResetSession = `https://opentdb.com/api_token.php?command=reset${token}`;
 // main url request questions variable
 let urlRequest;
 //
+// Modal variables;
+let vModal = document.querySelector('#simpleModal');
+let vCloseBtn = document.querySelector('.closeBtn');
+// och Submit knappen for aktivera modal
 //MAIN PROGRAM EXECUTION//
 createStartButton();
 //transitionToStart();
@@ -293,15 +294,17 @@ function controlResultat (correctAnswer,checkedAnswer) {
   
   
   //aqui ocurirrira el modal dialog !!!!******************
-  transitionToStart();
+  openModal();
+  ///transitionToStart();
  }else{
   //debugger;
   alert('chek att all frågor har ensvar och trycka submit igen');
  };
- 
- 
- 
  //transitionToStart();
 };
 //
+function openModal () {
+  vModal.style.display = 'block';
+  
+}
 
